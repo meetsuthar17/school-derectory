@@ -443,78 +443,78 @@ def search_student(
             detail=str(e)
         )
     
-# ---------------- GET SUBJECTS BY TEACHER ID ----------------
+# # ---------------- GET SUBJECTS BY TEACHER ID ----------------
 
-@app.get("/teachers/{tid}/subjects", tags=["Teachers", "Subjects"])
-def get_subjects_by_teacher(
+# @app.get("/teachers/{tid}/subjects", tags=["Teachers", "Subjects"])
+# def get_subjects_by_teacher(
 
-    tid: int,
-    db: Session = Depends(get_db)
+#     tid: int,
+#     db: Session = Depends(get_db)
 
-):
+# ):
 
-    try:
+#     try:
 
-        # ---------------- VALIDATE TEACHER ----------------
+#         # ---------------- VALIDATE TEACHER ----------------
 
-        teacher = db.query(models.Teacher).filter(
-            models.Teacher.tid == tid
-        ).first()
+#         teacher = db.query(models.Teacher).filter(
+#             models.Teacher.tid == tid
+#         ).first()
 
-        if not teacher:
-            raise HTTPException(
-                status_code=404,
-                detail="Teacher not found"
-            )
+#         if not teacher:
+#             raise HTTPException(
+#                 status_code=404,
+#                 detail="Teacher not found"
+#             )
 
-        # ---------------- FETCH SUBJECTS ----------------
+#         # ---------------- FETCH SUBJECTS ----------------
 
-        subjects = db.query(models.Subject).filter(
-            models.Subject.tid == tid
-        ).all()
+#         subjects = db.query(models.Subject).filter(
+#             models.Subject.tid == tid
+#         ).all()
 
-        if not subjects:
-            raise HTTPException(
-                status_code=404,
-                detail="No subjects assigned to this teacher"
-            )
+#         if not subjects:
+#             raise HTTPException(
+#                 status_code=404,
+#                 detail="No subjects assigned to this teacher"
+#             )
 
-        # ---------------- RETURN RESPONSE ----------------
+#         # ---------------- RETURN RESPONSE ----------------
 
-        return {
-            "teacher_id": tid,
-            "teacher_name": teacher.tname,
-            "subjects": [
-                subject.subject_dict()
-                for subject in subjects
-            ]
-        }
+#         return {
+#             "teacher_id": tid,
+#             "teacher_name": teacher.tname,
+#             "subjects": [
+#                 subject.subject_dict()
+#                 for subject in subjects
+#             ]
+#         }
 
-    except HTTPException:
-        raise
+#     except HTTPException:
+#         raise
 
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Error fetching subjects: {str(e)}"
-        )
+#     except Exception as e:
+#         raise HTTPException(
+#             status_code=500,
+#             detail=f"Error fetching subjects: {str(e)}"
+#         )
         
-# ---------------- GET SUBJECTS BY TEACHER ID ----------------
+# ---------------- GET SUBJECTS BY TEACHER NAME ----------------
 
-@app.get("/teachers/{tid}/subjects", tags=["Teachers", "Subjects"])
-def get_subjects_by_teacher(
+@app.get("/teachers/{tname}/subjects", tags=["Teachers", "Subjects"])
+def get_subjects_by_teacher_name(
 
-    tid: int,
+    tname: str,
     db: Session = Depends(get_db)
 
 ):
 
     try:
 
-        # ---------------- CHECK TEACHER ----------------
+        # ---------------- FIND TEACHER BY NAME ----------------
 
         teacher = db.query(models.Teacher).filter(
-            models.Teacher.tid == tid
+            models.Teacher.tname == tname
         ).first()
 
         if not teacher:
@@ -526,7 +526,7 @@ def get_subjects_by_teacher(
         # ---------------- FETCH SUBJECTS ----------------
 
         subjects = db.query(models.Subject).filter(
-            models.Subject.tid == tid
+            models.Subject.tid == teacher.tid
         ).all()
 
         if not subjects:
@@ -535,7 +535,7 @@ def get_subjects_by_teacher(
                 detail="No subjects found for this teacher"
             )
 
-        # ---------------- FORMAT RESPONSE ----------------
+        # ---------------- RESPONSE ----------------
 
         return {
             "teacher_id": teacher.tid,
