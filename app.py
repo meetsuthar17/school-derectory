@@ -293,9 +293,9 @@ elif menu == "Subjects":
         if not teacher:
             st.error("Teacher not found")
         else:
-            tid = teacher["tid"]
+            tname = teacher["tname"]
 
-            res = requests.get(f"{BASE_URL}/teachers/{tid}/subjects")
+            res = requests.get(f"{BASE_URL}/teachers/{tname}/subjects")
 
             if res.status_code == 200:
                 data = res.json()
