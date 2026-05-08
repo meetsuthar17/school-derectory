@@ -20,12 +20,32 @@ section[data-testid="stSidebar"] {
     border-right: 1px solid #334155;
 }
 
+/* Sidebar title */
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] span {
+    color: white !important;
+}
+
+/* Radio button text */
+div[role="radiogroup"] label {
+    color: white !important;
+}
+
+/* Selected radio option */
+div[role="radiogroup"] label[data-baseweb="radio"] {
+    color: white !important;
+}
+
 .title {
     font-size: 32px;
     font-weight: 700;
     margin-bottom: 15px;
 }
-
+        
 .card {
     padding: 25px;
     border-radius: 18px;
