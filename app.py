@@ -16,7 +16,7 @@ html, body, [class*="css"] {
 }
 
 section[data-testid="stSidebar"] {
-    background: #020617;
+    background: #020617;   
     border-right: 1px solid #334155;
 }
 
